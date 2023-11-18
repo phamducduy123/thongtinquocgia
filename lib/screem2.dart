@@ -4,7 +4,7 @@ class SecondScreen extends StatelessWidget {
   final Country country;
 
   // In the constructor, require a Country object
-  SecondScreen({required this.country});
+  SecondScreen({required this.country});  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +12,7 @@ class SecondScreen extends StatelessWidget {
         title: Text("Thông Tin Chi Tiết"),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,  // xuat ra thông tin chi tiết quốc gia đó
         children: [
           Text(
             "Mã Quốc Gia:${country.countryCode}",
@@ -39,7 +39,7 @@ class SecondScreen extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           Image.network(
-              "https://img.geonames.org/img/country/250/${country.countryCode}.png")
+              "https://img.geonames.org/img/country/250/${country.countryCode}.png") //image hình ảnh với contrycode viết hoa 
         ],
       ),
     );
