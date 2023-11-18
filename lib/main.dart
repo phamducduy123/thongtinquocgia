@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'screem2.dart';
-import 'country.dart';
+import 'dart:convert';               //import thu vien
+import 'screem2.dart';                     //import 
+import 'country.dart';                      //import
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;    //import thu vien
 
 void main() {
   runApp(const MyApp());
@@ -34,16 +34,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Country> ds = [];
-  bool load = true;
-  Future _incrementCounter() async {
-  final response = await http.get(
-  Uri.parse('http://api.geonames.org/countryInfoJSON?username=duy1234'));
-  if (response.statusCode == 200) {
-   var userMap = jsonDecode(response.body);
-      for (var itemx in userMap.values) {
-        itemx.forEach((element) {
-          Country ct = Country(
+  List<Country> ds = [];                //danh sach cac quoc gia
+  bool load = true;                     // load la trang thai cua dang load
+  Future _incrementCounter() async {           // load danh sach tu intenet chay bat dong bo
+  final response = await http.get(Uri.parse('http://api.geonames.org/countryInfoJSON?username=duy1234'));//lay ds
+  if (response.statusCode == 200) {                      // neu thanh cong
+   var userMap = jsonDecode(response.body);                  // lay du lieu ra
+      for (var itemx in userMap.values) {                       //loop du lieu ra
+        itemx.forEach((element) {                               // loop lay cac truong ra
+          Country ct = Country(                                    // tao doi tuong va gan
         continent: element['continent'].toString(),capital: element['capital'].toString(),
         languages: element[' languages'].toString(),geonameId: element['geonameId'].toString(),
         south: element['south'].toString(),isoAlpha3: element['isoAlpha3'].toString(),
@@ -54,11 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
           countryName: element['countryName'].toString(), postalCodeFormat: element['postalCodeFormat'].toString(),
             continentName: element['continentName'].toString(),   currencyCode: element['currencyCode'].toString(),
             flag:
-              "https://img.geonames.org/flags/m/${element['countryCode'].toString().toLowerCase()}.png");
-          ds.add(ct);
+              "https://img.geonames.org/flags/m/${element['countryCode'].toString().toLowerCase()}.png");   //link co  ,luu y :countrycode phai viet thuong 
+          ds.add(ct);                //add vo list
         });
         setState(() {
-          load = false;
+          load = false;               //neu load song roi thi set load bang false
         });
       }
     }
@@ -83,15 +82,15 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: (load)
+        body: (load)           //neu dang load
             ? const Center(
                 child: Text(
-                  "Loading ......",
+                  "Loading ......",            // in ra dong chu loading
                 ),
               )
-            : Column(
+            : Column(                              //else thì xuất ra màn hình
                 children: <Widget>[
-                  // Header row
+                  // Header row                  ................đây là headder
                   const Row(
                     children: <Widget>[
                       Expanded(
@@ -107,15 +106,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
-                  // ListView
+                  // ListView                   .............đây là phần nội dung
                   Expanded(
                     child: ListView.builder(
-                      itemCount: ds.length,
+                      itemCount: ds.length,     //chieu dai cua list
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            onTap: () {
+                          child: ListTile(           // list item
+                            onTap: () {              // ontap để mở màn hình thứ 2 để xuất chi tiết
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -124,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               );
                             },
-                            trailing: Text(
+                            trailing: Text(              //phần cuối là tên quốc gia     
                               ds[index].countryName,
                               textAlign: TextAlign.right,
                               style: const TextStyle(
@@ -132,11 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            title: Text(
+                            title: Text(              //phần giữa là diện tích
                               ds[index].areaInSqKm,
                               textAlign: TextAlign.left,
                             ),
-                            leading: Image.network(ds[index].flag,
+                            leading: Image.network(ds[index].flag,         // phần đầu là cờ
                                 width: 60, height: 50, fit: BoxFit.fill),
                           ),
                         );
